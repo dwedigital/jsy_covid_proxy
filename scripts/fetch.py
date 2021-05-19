@@ -4,9 +4,10 @@ from scripts import models
 
 
 def data():
-    data = requests.get('https://www.gov.je/Datasets/ListOpenData?ListName=COVID19CasesChart&type=json')
+    data = requests.get('https://www.gov.je/datasets/listopendata?listname=COVID19&type=json&refresh=yes')
     data = json.loads(data.content)
+
     return models.DailyData(
-        data['COVID19CasesChart'][0]['DateTime'],
-    data['COVID19CasesChart'][0]['KnownActiveCases'],
-    data['COVID19CasesChart'][0]['Newcasesreported'])
+        data['COVID19'][0]['DateTime'],
+    data['COVID19'][0]['CasesCurrentKnownActiveCases'],
+    data['COVID19'][0]['CasesDailyNewConfirmedCases'])

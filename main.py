@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request,jsonify
+from flask import Flask, request
 from scripts import fetch
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 app = Flask(__name__)
-CORS(app,resources={r"/active-cases": {"origins": "*"}})
+CORS(app,resources={r"/active-cases": {"origins": "chrome-extension://*"}})
 
 limiter = Limiter(
     app,
@@ -15,13 +15,13 @@ limiter = Limiter(
 
 @limiter.limit("1000 per hour")
 @app.route('/active-cases')
-def test():
+def getData():
     try:
-        if (request.headers['Origin'] != "chrome-extension://iednokmclhpiplepaaillldbdgngghoi"):
+        if ("chrome-extension://" not in request.headers['Origin'] ):
             return {"error":"Invalid request, must be made from valid Chrome extension"}
     except KeyError:
         return {"error":"Invalid request, must be made from valid Chrome extension"}
-    
+
     # Flask now jsonifys a dictionary on return. Use built in __dict__ to convert an object to a dict
     return fetch.data().__dict__
 
