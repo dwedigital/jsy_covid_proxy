@@ -1,5 +1,11 @@
-class DailyData():
-    def __init__(self,date,active,newCases):
-        self.date = date
-        self.active = active
-        self.newCases = newCases
+from dataclasses import dataclass
+
+
+@dataclass
+class DailyData:
+        date: str
+        active: str
+        casesSymptomatic: str
+        contacts: str
+        dayOfWeek: int
+
