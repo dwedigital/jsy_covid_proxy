@@ -59,21 +59,18 @@ def data():
     dates = []
     active_cases = []
 
-    i = 0
-    while i < 7:
-        print(i)
-        for day in data['COVID19']:
-            if (datetime.strptime(day['Date'],"%Y-%m-%d").weekday()==5 or datetime.strptime(day['Date'],"%Y-%m-%d").weekday()==6):
-                pass
-            else:
-                
-                chart['dates'].append(day['Date'])
-                try:
-                    chart['activeCases'].append(int(day['CasesCurrentKnownActiveCases']) - int(day['CasesSymptomatic']))
-                except:
-                    chart['activeCases'].append(0)
-                chart['symptomaticCases'].append(day['CasesSymptomatic'])
-            i +=1
+
+    for day in data['COVID19']:
+        if (datetime.strptime(day['Date'],"%Y-%m-%d").weekday()==5 or datetime.strptime(day['Date'],"%Y-%m-%d").weekday()==6):
+            pass
+        else:
+            
+            chart['dates'].append(day['Date'])
+            try:
+                chart['activeCases'].append(int(day['CasesCurrentKnownActiveCases']) - int(day['CasesSymptomatic']))
+            except:
+                chart['activeCases'].append(0)
+            chart['symptomaticCases'].append(day['CasesSymptomatic'])
 
 
     return ([previousDay,latestDay,{"weekend":weekend}, chart])
