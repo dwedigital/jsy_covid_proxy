@@ -37,14 +37,16 @@ def data():
     data['COVID19'][last]['CasesCurrentKnownActiveCases'],
     data['COVID19'][last]['CasesSymptomatic'],
     data['COVID19'][last]['CasesNumberOfKnownDirectContactsOfCurrentActiveCases'],
+    data['COVID19'][last]['CasesKnownCasesInHospital'],
     datetime.strptime(data['COVID19'][last]['Date'],"%Y-%m-%d").weekday()
-    ).__dict__
+    ).__dict__  
 
     latestDay = models.DailyData(
  data['COVID19'][first]['DateTime'],
     data['COVID19'][first]['CasesCurrentKnownActiveCases'],
     data['COVID19'][first]['CasesSymptomatic'],
     data['COVID19'][first]['CasesNumberOfKnownDirectContactsOfCurrentActiveCases'],
+    data['COVID19'][first]['CasesKnownCasesInHospital'],
     datetime.strptime(data['COVID19'][first]['Date'],"%Y-%m-%d").weekday()
     
     ).__dict__
@@ -54,7 +56,8 @@ def data():
     chart = {
         "dates":[],
         "activeCases":[],
-        "symptomaticCases":[]
+        "symptomaticCases":[],
+        "hospitalCases":[],
     }
     dates = []
     active_cases = []
@@ -68,9 +71,12 @@ def data():
             chart['dates'].append(day['Date'])
             try:
                 chart['activeCases'].append(int(day['CasesCurrentKnownActiveCases']) - int(day['CasesSymptomatic']))
+                chart['symptomaticCases'].append(int(day['CasesSymptomatic']))
+                chart['hospitalCases'].append(int(day['CasesKnownCasesInHospital']))
             except:
                 chart['activeCases'].append(0)
-            chart['symptomaticCases'].append(day['CasesSymptomatic'])
+                chart['symptomaticCases'].append(0)
+                chart['hospitalCases'].append(0)
 
 
     return ([previousDay,latestDay,{"weekend":weekend}, chart])

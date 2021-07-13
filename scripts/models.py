@@ -7,5 +7,6 @@ class DailyData:
         active: str
         casesSymptomatic: str
         contacts: str
+        hospitalCases:str
         dayOfWeek: int
 
