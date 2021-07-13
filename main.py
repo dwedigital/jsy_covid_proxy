@@ -17,11 +17,11 @@ limiter = Limiter(
 @limiter.limit("1000 per hour")
 @app.route('/active-cases')
 def getData():
-    try:
-        if ("chrome-extension://" not in request.headers['Origin'] ):
-            return {"error":"Invalid request, must be made from valid Chrome extension"}
-    except KeyError:
-        return {"error":"Invalid request, must be made from valid Chrome extension"}
+    # try:
+    #     if ("chrome-extension://" not in request.headers['Origin'] ):
+    #         return {"error":"Invalid request, must be made from valid Chrome extension"}
+    # except KeyError:
+    #     return {"error":"Invalid request, must be made from valid Chrome extension"}
 
     return json.dumps(fetch.data())
 
