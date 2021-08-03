@@ -1,7 +1,21 @@
 import requests
 import json
 from scripts import models
-from datetime import datetime
+from datetime import datetime, date
+
+def checkUpdate():
+    data = requests.get('https://www.gov.je/datasets/listopendata?listname=COVID19&type=json&refresh=yes')
+    data = json.loads(data.content)
+    if (datetime.strptime(data['COVID19'][0]['Date'],"%Y-%m-%d").weekday()==6 or datetime.strptime(data['COVID19'][0]['Date'],"%Y-%m-%d").weekday()==5):
+        return {"today":False}
+    else:
+        #convert string to date time
+        current = datetime.strptime(data['COVID19'][0]['Date'],"%Y-%m-%d")
+        #convert the date time object to just a date to compare against today
+        current = current.date()
+        #get today's dat as a standard date object
+        today = date.today()
+        return {"today":current==today}
 
 
 def data():
