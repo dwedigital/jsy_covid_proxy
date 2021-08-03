@@ -3,7 +3,7 @@ from scripts import fetch
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import json
+
 app = Flask(__name__)
 CORS(app,resources={r"/active-cases": {"origins": "chrome-extension://*"},
 r"/check-update": {"origins": "chrome-extension://*"}})
