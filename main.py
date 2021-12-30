@@ -7,8 +7,11 @@ from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app,resources={r"/active-cases": {"origins": "chrome-extension://*"},
-r"/check-update": {"origins": "chrome-extension://*"}})
+CORS(app,resources={
+    r"/active-cases": {"origins": "chrome-extension://*"},
+    r"/check-update": {"origins": "chrome-extension://*"},
+    r"/vaccine-data": {"origins": "chrome-extension://*"}
+    })
 
 @app.errorhandler(429)
 def ratelimit_handler(e):
@@ -22,11 +25,6 @@ limiter = Limiter(
 
 class Active(Resource):
     def get(self):
-        # try:
-        #     if ("chrome-extension://" not in request.headers['Origin'] ):
-        #         return {"error":"Invalid request, must be made from valid Chrome extension"}
-        # except KeyError:
-        #     return {"error":"Invalid request, must be made from valid Chrome extension"}
         return jsonify(fetch.data())
 
 
@@ -40,20 +38,7 @@ class Check (Resource):
 
 
 
-# @limiter.limit("1000 per hour")
-# @app.route('/active-cases')
-# def getData():
-#     try:
-#         if ("chrome-extension://" not in request.headers['Origin'] ):
-#             return {"error":"Invalid request, must be made from valid Chrome extension"}
-#     except KeyError:
-#         return {"error":"Invalid request, must be made from valid Chrome extension"}
 
-#     return jsonify(fetch.data())
-
-# @app.route('/check-update')
-# def checkUpdate():
-#     return jsonify(fetch.checkUpdate())
 
 api.add_resource(Active,'/active-cases')
 api.add_resource(Check,'/check-update')
