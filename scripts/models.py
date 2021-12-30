@@ -10,3 +10,10 @@ class DailyData:
         hospitalCases:str
         dayOfWeek: int
 
+@dataclass
+class VaccineDailyData:
+        date: str
+        total: str
+        first: str
+        second: str
+        booster:str

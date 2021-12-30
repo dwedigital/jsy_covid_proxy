@@ -94,3 +94,17 @@ def data():
 
 
     return ([previousDay,latestDay,{"weekend":weekend}, chart])
+
+
+def VaccineData():
+    print("fetching")
+    data = requests.get('https://www.gov.je/datasets/listopendata?listname=COVID19Weekly&type=json&refresh=yes')
+    data = json.loads(data.content)
+    data = models.VaccineDailyData(
+        date=data['COVID19Weekly'][0]['Date'],
+        total=data['COVID19Weekly'][0]['VaccinationsTotalNumberDoses'],
+        first=data['COVID19Weekly'][0]['VaccinationsTotalNumberFirstDoseVaccinations'],
+        second=data['COVID19Weekly'][0]['VaccinationsTotalNumberSecondDoseVaccinations'],
+        booster=data['COVID19Weekly'][0]['VaccinationsTotalNumberThirdDoseVaccinations']
+    )
+    return data
