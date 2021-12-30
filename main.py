@@ -27,7 +27,7 @@ class Active(Resource):
         #         return {"error":"Invalid request, must be made from valid Chrome extension"}
         # except KeyError:
         #     return {"error":"Invalid request, must be made from valid Chrome extension"}
-        return jsonify(fetch.CaseData())
+        return jsonify(fetch.data())
 
 
 class VaccineData(Resource):
